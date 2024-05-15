@@ -2,3 +2,6 @@ flask
 firebase_admin
 gunicorn
 python-dotenv
+openai
+Flask-Session 
+redis

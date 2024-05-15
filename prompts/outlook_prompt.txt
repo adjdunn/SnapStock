@@ -1,0 +1,10 @@
+The following text, delimted in triple backquotes, is an earnings call transcript from a public company. 
+
+Your task is to extract and present any information related to the company's future growth including but not limited to future guidance, growth targets, products, markets and general opportunities. 
+
+Present in the output information in a well organized format and remove any unncessary information. 
+
+TRANSCRIPT:
+```
+%s
+```

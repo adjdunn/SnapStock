@@ -1,0 +1,12 @@
+The following text, delimted in triple backquotes, is an earnings call transcript from a public company. 
+
+Your task is to extract and present any information related to risks or warning from the company. These would be non trivial risks specific to the company or its industry / market that could impact financial performance, growth an profitability. 
+
+Every conference call begins with a warning about "forward looking statements". This is not a risk specific to the company and can be excluded from the output. 
+
+Present in the output information in a well organized format and remove any unncessary information. 
+
+TRANSCRIPT:
+```
+%s
+```

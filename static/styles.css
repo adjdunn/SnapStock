@@ -49,16 +49,133 @@ main {
 
 .centered-input {
     width: 12rem;
-    margin-right: 0.2rem;
+    margin-right: 0.5rem;
+    border: none;
 }
 
 .submit-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 8rem;
     height: 100%;
+    background-color: rgb(167, 167, 249);
+    border: none;
+    color: white;
+}
+
+.submit-button:hover {
+    cursor: pointer;
+    background-color: rgb(69, 69, 241);
+}
+
+.submit-clicked {
+    background-color: rgb(26, 246, 26);
+}
+
+.submit-clicked:hover {
+    background-color: rgb(26, 246, 26);
+}
+
+
+.output-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.page-tabs {
+    min-height: 3rem;
+    display: flex;
 }
 
 
 
+.data-content {
+    min-height: 10rem;
+    width: 80%;
+    background-color: white;
+    padding: 2rem;
+}
+
+.tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    min-width: 10rem;
+    cursor: pointer;
+}
+
+#tab-1 {
+    background-color: white;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+}
+
+#tab-2 {
+    background-color: white;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+}
+
+#tab-3 {
+    background-color: white;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.active-tab {
+    background-color: rgb(7, 7, 7) !important;
+    color: white;
+}
+
+.not-visible {
+    display: none;
+}
+
+
+/* === Spinner === */
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+
+}
+
+.spinner-box {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: none;
+}
+
+.spinner {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+.spinner-text {
+    position: absolute;
+    top: 60%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 2rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
 
 /* === Structure === */
@@ -461,4 +578,10 @@ footer {
         flex-direction: column;
         padding: 0;
     }
+
+    .page-tabs {
+        display: none;
+    }
+
+
 }

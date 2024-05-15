@@ -4,7 +4,11 @@ import firebase_admin
 from firebase_admin import credentials, firestore, auth
 from datetime import timedelta
 import os
+from summarizer import create_summaries, get_earnings_call_transcript
+from flask_session import Session
+from redis import Redis
 from dotenv import load_dotenv
+
 
 load_dotenv()
 
@@ -20,11 +24,24 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)  # Adjust session e
 app.config['SESSION_REFRESH_EACH_REQUEST'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Can be 'Strict', 'Lax', or 'None'
 
+# Configure session to use Redis
+app.config['SESSION_TYPE'] = 'redis'
+app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_USE_SIGNER'] = True
+app.config['SESSION_KEY_PREFIX'] = 'flask_session:'
+app.config['SESSION_REDIS'] = Redis.from_url(os.getenv('REDIS_URL'))
+
+# Initialize the session
+Session(app)
+
 
 # Firebase Admin SDK setup
 cred = credentials.Certificate("firebase-auth.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
+
+
+
 
 
 
@@ -39,8 +56,14 @@ def auth_required(f):
         if 'user' not in session:
             return redirect(url_for('login'))
         
-        else:
-            return f(*args, **kwargs)
+        # else:
+
+        #     if session['user']['uid'] not in ['TfwhiA8iXaXdcJCakG95BrOmqKF2']:
+        #         return "Unauthorized", 401
+            
+        #    else:
+
+        return f(*args, **kwargs)
         
     return decorated_function
 
@@ -103,12 +126,33 @@ def privacy():
 def logout():
     session.pop('user', None)  # Remove the user from session
     response = make_response(redirect(url_for('login')))
-    response.set_cookie('session', '', expires=0)  # Optionally clear the session cookie
+    response.set_cookie('session', '', expires=0) 
     return response
 
 
 ##############################################
 """ Private Routes (Require authorization) """
+
+@app.route('/api/summary', methods=['GET', 'POST'])
+@auth_required
+def summary():
+    if request.method == 'POST':
+        data = request.json
+        symbol = data['symbol'].upper()
+
+        transcript_data = get_earnings_call_transcript(symbol)
+
+        # Store transcript_data in session
+        session['transcript_data'] = transcript_data
+
+        print(transcript_data)
+
+        summaries = create_summaries(symbol)
+
+        return jsonify(summaries)
+    else:
+        return jsonify({'message': 'GET request received'})
+
 
 @app.route('/dashboard')
 @auth_required
@@ -116,6 +160,11 @@ def dashboard():
 
     return render_template('dashboard.html')
 
+
+
+@app.route('/view')
+def view():
+    return str(session['transcript_data'])
 
 
 

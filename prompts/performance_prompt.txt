@@ -1,0 +1,10 @@
+The following text, delimted in triple backquotes, is an earnings call transcript from a public company. 
+
+Your task is to extract and present any information related to the recent financial performance. This includes growth or declines in key metrics like revenue, earnings, eps and cash flow. I also includes discussion margins, financial position and the balance sheet. Also, provide any explainations of the factors driving the financial performance. 
+
+Present in the output information in a well organized format and remove any unncessary information.
+
+TRANSCRIPT:
+```
+%s
+```
