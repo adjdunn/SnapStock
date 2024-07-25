@@ -71,17 +71,21 @@ def auth_required(f):
 @app.route('/auth', methods=['POST'])
 def authorize():
     token = request.headers.get('Authorization')
+
     if not token or not token.startswith('Bearer '):
         return "Unauthorized", 401
 
     token = token[7:]  # Strip off 'Bearer ' to get the actual token
 
     try:
+        print('here I am')
         decoded_token = auth.verify_id_token(token) # Validate token here
+        print('the problem is here')
         session['user'] = decoded_token # Add user to session
         return redirect(url_for('dashboard'))
     
     except:
+        
         return "Unauthorized", 401
 
 
@@ -142,10 +146,10 @@ def summary():
 
         transcript_data = get_earnings_call_transcript(symbol)
 
-        # Store transcript_data in session
+        # # Store transcript_data in session
         session['transcript_data'] = transcript_data
 
-        print(transcript_data)
+        # print(transcript_data)
 
         summaries = create_summaries(symbol)
 

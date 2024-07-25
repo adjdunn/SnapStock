@@ -42,7 +42,7 @@ def summarize_text(text, prompt_file_path, client):
     prompt = open(prompt_file_path, 'r').read() % (text)
     
     response = client.chat.completions.create(
-      model="gpt-3.5-turbo-16k",
+      model="gpt-4o-mini",
       messages=[
         {
           "role": "system",
